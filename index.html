@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rúbrica de Evaluación</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f6f8;
+    margin:0;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+h1{
+    text-align:center;
+}
+
+input, select{
+    width:100%;
+    padding:10px;
+    margin:5px 0;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+    background:#27ae60;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#219150;
+}
+
+.criterio{
+    margin-bottom:20px;
+    background:#ecf0f1;
+    padding:15px;
+    border-radius:10px;
+}
+
+.niveles{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.nivel{
+    background:white;
+    padding:8px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    font-size:13px;
+}
+
+.resultado{
+    margin-top:15px;
+    padding:15px;
+    background:#dff9fb;
+    border-radius:10px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.hidden{
+    display:none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PANTALLA 1 -->
+<div class="container" id="pantalla1">
+    <h1>Registro del Equipo</h1>
+
+   <h3>Evaluador</h3>
+    <input type="text" id="evaluador" placeholder="Nombre del evaluador">
+
+    <h3>Integrantes (máx. 6)</h3>
+    <input type="text" placeholder="Integrante 1" id="i1">
+    <input type="text" placeholder="Integrante 2" id="i2">
+    <input type="text" placeholder="Integrante 3" id="i3">
+    <input type="text" placeholder="Integrante 4" id="i4">
+    <input type="text" placeholder="Integrante 5" id="i5">
+    <input type="text" placeholder="Integrante 6" id="i6">
+
+    <h3>Tema</h3>
+    <select id="temaSelect" onchange="verificarTema()">
+        <option value="">Selecciona un tema</option>
+        <option value="Energías renovables">Energías renovables</option>
+        <option value="Mix energético en México">Mix energético en México</option>
+        <option value="Transición energética">Transición energética</option>
+        <option value="Impacto ambiental de las fuentes de energía">Impacto ambiental</option>
+        <option value="Uso de la energía en la vida cotidiana">Uso de la energía</option>
+        <option value="otro">Otro (escribir manualmente)</option>
+    </select>
+
+    <input type="text" id="temaOtro" placeholder="Escribe el tema" class="hidden">
+
+    <button onclick="iniciarEvaluacion()">Iniciar Evaluación</button>
+</div>
+
+<!-- PANTALLA 2 -->
+<div class="container hidden" id="pantalla2">
+    <h1>Evaluación</h1>
+
+    <div id="info"></div>
+
+    <!-- CRITERIOS -->
+    <div class="criterio">
+        <h3>1. Calidad del producto</h3>
+        <div class="niveles">
+             <div class="nivel"><strong>4 (Excelente):</strong> Clara, fluida, segura y con dominio del tiempo.</div>
+            <div class="nivel"><strong>3 (Bueno):</strong> Adecuada, con algunos titubeos.</div>
+            <div class="nivel"><strong>2 (Suficiente):</strong> Lectura constante y poca claridad.</div>
+            <div class="nivel"><strong>1 (Deficiente):</strong> Confusa, sin estructura.</div>
+        </div>
+        <select id="c1">
+            <option value="0">Selecciona tu evaluación</option>
+            <option value="4">4 - Excelente</option>
+            <option value="3">3 - Bueno</option>
+            <option value="2">2 - Suficiente</option>
+            <option value="1">1 - Deficiente</option>
+        </select>
+    </div>
+
+    <div class="criterio">
+        <h3>2. Comunicación y Presentación</h3>
+        <div class="niveles">
+            <div class="nivel"><strong>4 (Excelente):</strong> Clara, fluida, segura y con dominio del tiempo.</div>
+            <div class="nivel"><strong>3 (Bueno):</strong> Adecuada, con algunos titubeos.</div>
+            <div class="nivel"><strong>2 (Suficiente):</strong> Lectura constante y poca claridad.</div>
+            <div class="nivel"><strong>1 (Deficiente):</strong> Confusa, sin estructura.</div>
+        </div>
+        <select id="c2">
+            <option value="0">Selecciona tu evaluación</option>
+            <option value="4">4 - Excelente</option>
+            <option value="3">3 - Bueno</option>
+            <option value="2">2 - Suficiente</option>
+            <option value="1">1 - Deficiente</option>
+        </select>
+    </div>
+
+    <div class="criterio">
+        <h3>3. Conocimiento del tema y uso técnico</h3>
+        <div class="niveles">
+            <div class="nivel"><strong>4 (Excelente):</strong> Dominio total, uso correcto de términos técnicos.</div>
+            <div class="nivel"><strong>3 (Bueno):</strong> Buen conocimiento con pequeños errores.</div>
+            <div class="nivel"><strong>2 (Suficiente):</strong> Conocimiento limitado y superficial.</div>
+            <div class="nivel"><strong>1 (Deficiente):</strong> Desconocimiento del tema.</div>
+        </div>
+        <select id="c3">
+            <option value="0">Selecciona tu evaluación</option>
+            <option value="4">4 - Excelente</option>
+            <option value="3">3 - Bueno</option>
+            <option value="2">2 - Suficiente</option>
+            <option value="1">1 - Deficiente</option>
+        </select>
+    </div>
+
+    <div class="criterio">
+        <h3>4. Impacto del mensaje</h3>
+        <div class="niveles">
+            <div class="nivel"><strong>4 (Excelente):</strong> Mensaje claro, profundo y genera reflexión.</div>
+            <div class="nivel"><strong>3 (Bueno):</strong> Claro pero poco profundo.</div>
+            <div class="nivel"><strong>2 (Suficiente):</strong> Superficial o poco claro.</div>
+            <div class="nivel"><strong>1 (Deficiente):</strong> Sin mensaje claro.</div>
+        </div>
+        <select id="c4">
+            <option value="0">Selecciona tu evaluación</option>
+            <option value="4">4 - Excelente</option>
+            <option value="3">3 - Bueno</option>
+            <option value="2">2 - Suficiente</option>
+            <option value="1">1 - Deficiente</option>
+        </select>
+    </div>
+
+    <button onclick="calcular()">Calcular</button>
+    <button onclick="guardar()">Guardar evaluación</button>
+    <button onclick="reiniciar()">Evaluar otro equipo</button>
+
+    <div class="resultado" id="resultado"></div>
+</div>
+
+<script>
+let datos = {};
+let scriptURL = "https://script.google.com/macros/s/AKfycbxQz1JqcB0pMGcrUvGpVIiKFzRlwMn5GbcRHMjVKKa01nmo9XwXF3uA0XSatO4aQJrc/exec"; // 🔴 Pega tu URL
+
+function verificarTema(){
+    let select = document.getElementById("temaSelect").value;
+    let otro = document.getElementById("temaOtro");
+
+    if(select === "otro"){
+        otro.classList.remove("hidden");
+    } else {
+        otro.classList.add("hidden");
+    }
+}
+
+function iniciarEvaluacion(){
+    let integrantes = [];
+    for(let i=1;i<=6;i++){
+        let val = document.getElementById("i"+i).value;
+        if(val) integrantes.push(val);
+    }
+
+    let temaSeleccionado = document.getElementById("temaSelect").value;
+    let temaManual = document.getElementById("temaOtro").value;
+
+    let tema = (temaSeleccionado === "otro") ? temaManual : temaSeleccionado;
+
+    let evaluador = document.getElementById("evaluador").value;
+
+    if(integrantes.length===0 || tema==="" || evaluador===""){
+        alert("Completa todos los datos");
+        return;
+    }
+
+    datos = {integrantes, tema, evaluador};
+
+    document.getElementById("pantalla1").classList.add("hidden");
+    document.getElementById("pantalla2").classList.remove("hidden");
+
+    document.getElementById("info").innerHTML =
+        "<b>Equipo:</b> "+integrantes.join(", ")+"<br>"+
+        "<b>Tema:</b> "+tema+"<br>"+
+        "<b>Evaluador:</b> "+evaluador;
+}
+
+function calcular(){
+    let c1 = +document.getElementById("c1").value;
+    let c2 = +document.getElementById("c2").value;
+    let c3 = +document.getElementById("c3").value;
+    let c4 = +document.getElementById("c4").value;
+
+    if(!c1 || !c2 || !c3 || !c4){
+        alert("Completa todas las calificaciones");
+        return;
+    }
+
+    let total = c1 + c2 + c3 + c4;
+    let final = (total / 16) * 10;
+
+    datos.c1 = c1;
+    datos.c2 = c2;
+    datos.c3 = c3;
+    datos.c4 = c4;
+    datos.resultado = final.toFixed(2);
+
+    document.getElementById("resultado").innerHTML =
+        "Calificación final: " + datos.resultado;
+}
+
+function guardar(){
+    fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify(datos),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(res => res.text())
+    .then(response => {
+        alert("✅ Evaluación guardada en Google Sheets");
+    })
+    .catch(error => {
+        alert("❌ Error al guardar");
+        console.error(error);
+    });
+}
+
+function reiniciar(){
+    location.reload();
+}
+</script>
+
+</body>
+</html>
