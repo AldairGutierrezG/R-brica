@@ -271,20 +271,29 @@ function calcular(){
 }
 
 function guardar(){
+
+    let formData = new FormData();
+
+    formData.append("evaluador", datos.evaluador);
+    formData.append("tema", datos.tema);
+    formData.append("integrantes", datos.integrantes.join(", "));
+    formData.append("c1", datos.c1);
+    formData.append("c2", datos.c2);
+    formData.append("c3", datos.c3);
+    formData.append("c4", datos.c4);
+    formData.append("resultado", datos.resultado);
+
     fetch(scriptURL, {
         method: "POST",
-        body: JSON.stringify(datos),
-        headers: {
-            "Content-Type": "application/json"
-        }
+        body: formData
     })
     .then(res => res.text())
-    .then(response => {
-        alert("✅ Evaluación guardada en Google Sheets");
+    .then(() => {
+        alert("✅ Evaluación guardada correctamente");
     })
-    .catch(error => {
+    .catch(err => {
         alert("❌ Error al guardar");
-        console.error(error);
+        console.error(err);
     });
 }
 
